@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Artikel Masjid</title>
+	<link rel="stylesheet" href="../CSS/style2.css" />
+    <style>
+	.article-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+	}
+	</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <img src="../Image/Logo Masjid.png" alt="Logo Website">
+    <nav class="nav">
+        <ul>
+            <li><a href="beranda.html">Beranda</a></li>
+            <li><a href="Jadwal Sholat.html">Jadwal Sholat</a></li>
+            <li><a href="Berita.html">Berita</a></li>
+            <li><a href="Tentang Kami.html">Tentang Kami</a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Hero Section -->
+<div class="hero">
+    <h2>Masjid Jami' Baiturrohman</h2>
+    <p>Portal berita <strong>terkini</strong> seputar informasi terbaru dari Masjid</p>
+    
+<!-- Search Bar -->
+<div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Cari artikel...">
+    <button onclick="searchArticles()">Cari</button>
+</div>
+<div id="notFound" style="display: none; text-align: center; color: red;">
+    Tidak ada artikel yang ditemukan.
+</div>
+
+<h1>Daftar Artikel</h1>
+<ul id="article-list" class="article-list"></ul>
+
+<div class="pagination">
+    <button onclick="changePage(-1)">Sebelumnya</button>
+    <button onclick="changePage(1)">Selanjutnya</button>
+</div>
+
+<script>
+    // Data artikel dalam array JavaScript
+    const articles = [
+    { title: "Memperkenalkan Program Sosial di Masjid Baiturrohman", description: "Program sosial terbaru di Masjid Baiturrohman bertujuan untuk membantu masyarakat yang membutuhkan...", image: "../image/program-sosial.jpg", date: "2024-10-10", link: "artikel4.html", views: 10 },
+    { title: "Pelaksanaan Kegiatan Maulid Nabi di Masjid", description: "Masjid Baiturrohman merayakan Maulid Nabi Muhammad SAW dengan berbagai kegiatan menarik...", image: "../image/maulid-nabi.jpg", date: "2024-11-01", link: "artikel3.html", views: 25 },
+    { title: "Pelaksanaan Pesantren Kilat dan Gebyar Ramadhan", description: "Pelaksanaan pesantren kilat dan gebyar ramadhan kembali digelar untuk kedua kalinya di Masjid Baiturrohman...", image: "../image/pesantren-kilat.jpg", date: "2024-04-15", link: "artikel2.html", views: 24 },
+    { title: "Pelaksanaan Pesantren Kilat dan Gebyar Ramadhan", description: "Pelaksanaan pesantren kilat dan gebyar ramadhan untuk pertama kali digelar di Masjid Baiturrohman...", image: "../image/pesantren-kilat.jpg", date: "2023-04-17", link: "artikel1.html", views: 36 }
+];
+
+
+    let currentPage = 1;
+    const articlesPerPage = 10;
+
+    // Fungsi untuk membuat elemen HTML untuk setiap artikel
+    function createArticleElement(article) {
+    console.log("Image path:", article.image); // Debugging path gambar
+
+    const listItem = document.createElement("li");
+    listItem.classList.add("article-item");
+
+    listItem.innerHTML = `
+        <img src="${article.image}" alt="${article.title}">
+        <h2>${article.title}</h2>
+        <p><em>${article.date} - Views: ${article.views}</em></p>
+        <p>${article.description}</p>
+        <a href="${article.link}" class="article-link">Baca Selengkapnya</a>
+    `;
+
+    return listItem;
+}
+
+    // Fungsi untuk menampilkan artikel sesuai halaman
+    function displayArticles(page) {
+        const articleList = document.getElementById("article-list");
+        articleList.innerHTML = "";
+        
+        const startIndex = (page - 1) * articlesPerPage;
+        const endIndex = startIndex + articlesPerPage;
+        const paginatedArticles = articles.slice(startIndex, endIndex);
+
+        paginatedArticles.forEach(article => {
+            const articleElement = createArticleElement(article);
+            articleList.appendChild(articleElement);
+        });
+    }
+
+    // Fungsi untuk berpindah halaman
+    function changePage(direction) {
+        currentPage += direction;
+        if (currentPage < 1) currentPage = 1;
+        displayArticles(currentPage);
+    }
+
+    // Fungsi untuk mencari artikel
+function searchArticles() {
+    const searchInput = document.getElementById("searchInput").value.toLowerCase();
+    const filteredArticles = articles.filter(article =>
+        article.title.toLowerCase().includes(searchInput) || article.description.toLowerCase().includes(searchInput)
+    );
+
+    const notFoundMessage = document.getElementById("notFound");
+    const articleList = document.getElementById("article-list");
+    articleList.innerHTML = ""; // Kosongkan daftar artikel sebelumnya
+
+    if (filteredArticles.length === 0) {
+        notFoundMessage.style.display = "block";
+    } else {
+        notFoundMessage.style.display = "none";
+        filteredArticles.forEach(article => {
+            const articleElement = createArticleElement(article);
+            articleList.appendChild(articleElement);
+        });
+    }
+    console.log("Filtered Articles:", filteredArticles);
+}
+
+
+
+    // Inisialisasi halaman pertama
+    displayArticles(currentPage);
+</script>
+
+</body>
+</html>

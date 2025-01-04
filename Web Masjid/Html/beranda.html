@@ -1,0 +1,602 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../CSS/style.css" />
+    <title>Masjid Baiturrohman</title>
+	<style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+  </head>
+  <header>
+   <img src="../Image/Logo Masjid.png" alt="Logo Website">
+        <ul>
+            <li><a href="beranda.html">Beranda</a></li>
+            <li><a href="Jadwal Sholat.html">Jadwal Sholat</a></li>
+			<li><a href="Berita.html">Berita</a></li>
+            <li><a href="Tentang Kami.html">Tentang Kami</a></li>
+        </ul>
+</header>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <nav>
+          <ul>
+            <li><a href="jadwal sholat.html">Jadwal Sholat</a></li>
+            <li><a href="kegiatan.html">Acara Kegiatan</a></li>
+            <li><a href="laporan keuangan.html">Laporan Keuangan</a></li>
+            <li><a href="pengurus masjid.html">Pengurus Masjid</a></li>
+			<li><a href="majelis ta'lim.html">Majelis Ta'lim</a></li>
+			<li><a href="badan usaha.html">Badan Usaha Masjid</a></li>
+          </ul>
+        </nav>
+      </div>
+      <main class="content">
+        <section class="hero">
+          <img src="online.png" alt="" />
+          <div class="hero-content">
+            <h1>Masjid Jami' Baiturrohman</h1>
+            <br />
+            <h2>Selamat datang di website resmi Masjid Jami' Baiturrohman</h2>
+            <br />
+	 <br />
+	 <p>
+              Assalamualaikum Wr. Wb.
+			</p>
+			<br>
+			<p>
+			  Website ini merupakan website resmi Masjid Jami' Baiturrohman. Disini akan menampilkan informasi berbagai kegiatan dan laporan keuangan bulanan masjid. 
+            </p>
+			<br>
+			<p>
+			  Terima kasih.
+			</p>
+			<br />
+			<h3 style="text-align: center;">Jadwal Sholat Hari Ini</h3>
+	 <br />
+    <table>
+        <tr>
+            <th>Tanggal</th>
+            <th>Dzuhur</th>
+            <th>Ashar</th>
+            <th>Maghrib</th>
+            <th>Isya</th>
+            <th>Subuh</th>
+        </tr>
+        <tr id="jadwalHariIni">
+            <!-- Jadwal akan ditampilkan di sini -->
+        </tr>
+    </table>
+	<br>
+	<table border="1" id="prayer-table">
+        <tr>
+            <th>Sholat berikutnya</th>
+            <td> <div id="next-prayer" class="next-prayer"></div></td>
+        </tr>
+        <tr>
+            <th>Waktu sholat tinggal</th>
+            <td><div id="countdown" class="countdown"></div></td>
+        </tr>
+    </table>
+
+    <!-- Menampilkan jadwal salat -->
+    <div id="schedule" class="time"></div>
+
+    <!-- Menampilkan salat berikutnya -->
+    <div id="next-prayer" class="next-prayer"></div>
+
+    <!-- Menampilkan waktu mundur -->
+    <div id="countdown" class="countdown"></div>
+	<br />
+		<a href="jadwal sholat.html" class="action-btn" align="center">Lihat Jadwal Sholat Disini</a>
+	<br />	
+    <script>
+	// Data jadwal sholat
+const jadwalSholat = {
+    "01-01": { subuh: "04:25", dzuhur: "11:57", ashar: "15:23", maghrib: "18:12", isya: "19:28" },
+    "02-01": { subuh: "04:26", dzuhur: "11:57", ashar: "15:24", maghrib: "18:12", isya: "19:28" },
+    "03-01": { subuh: "04:27", dzuhur: "11:57", ashar: "15:24", maghrib: "18:12", isya: "19:28" },
+    "04-01": { subuh: "04:27", dzuhur: "11:58", ashar: "15:25", maghrib: "18:13", isya: "19:29" },
+    "05-01": { subuh: "04:28", dzuhur: "11:58", ashar: "15:25", maghrib: "18:13", isya: "19:29" },
+    "06-01": { subuh: "04:28", dzuhur: "11:59", ashar: "15:25", maghrib: "18:14", isya: "19:29" },
+    "07-01": { subuh: "04:29", dzuhur: "11:59", ashar: "15:25", maghrib: "18:14", isya: "19:30" },
+    "08-01": { subuh: "04:30", dzuhur: "12:00", ashar: "15:26", maghrib: "18:14", isya: "19:30" },
+    "09-01": { subuh: "04:30", dzuhur: "12:00", ashar: "15:26", maghrib: "18:15", isya: "19:30" },
+    "10-01": { subuh: "04:31", dzuhur: "12:01", ashar: "15:26", maghrib: "18:15", isya: "19:30" },
+    "11-01": { subuh: "04:31", dzuhur: "12:01", ashar: "15:27", maghrib: "18:15", isya: "19:31" },
+    "12-01": { subuh: "04:32", dzuhur: "12:01", ashar: "15:27", maghrib: "18:16", isya: "19:31" },
+    "13-01": { subuh: "04:32", dzuhur: "12:02", ashar: "15:27", maghrib: "18:16", isya: "19:31" },
+    "14-01": { subuh: "04:33", dzuhur: "12:02", ashar: "15:27", maghrib: "18:16", isya: "19:31" },
+    "15-01": { subuh: "04:34", dzuhur: "12:02", ashar: "15:27", maghrib: "18:16", isya: "19:31" },
+    "16-01": { subuh: "04:34", dzuhur: "12:03", ashar: "15:27", maghrib: "18:17", isya: "19:32" },
+    "17-01": { subuh: "04:35", dzuhur: "12:03", ashar: "15:28", maghrib: "18:17", isya: "19:32" },
+    "18-01": { subuh: "04:35", dzuhur: "12:04", ashar: "15:28", maghrib: "18:17", isya: "19:32" },
+    "19-01": { subuh: "04:36", dzuhur: "12:04", ashar: "15:28", maghrib: "18:17", isya: "19:32" },
+    "20-01": { subuh: "04:36", dzuhur: "12:04", ashar: "15:28", maghrib: "18:18", isya: "19:32" },
+    "21-01": { subuh: "04:37", dzuhur: "12:04", ashar: "15:28", maghrib: "18:18", isya: "19:32" },
+    "22-01": { subuh: "04:37", dzuhur: "12:05", ashar: "15:28", maghrib: "18:18", isya: "19:32" },
+    "23-01": { subuh: "04:38", dzuhur: "12:05", ashar: "15:28", maghrib: "18:18", isya: "19:32" },
+    "24-01": { subuh: "04:38", dzuhur: "12:05", ashar: "15:28", maghrib: "18:18", isya: "19:32" },
+    "25-01": { subuh: "04:39", dzuhur: "12:05", ashar: "15:28", maghrib: "18:18", isya: "19:32" },
+    "26-01": { subuh: "04:39", dzuhur: "12:06", ashar: "15:28", maghrib: "18:18", isya: "19:32" },
+    "27-01": { subuh: "04:40", dzuhur: "12:06", ashar: "15:28", maghrib: "18:18", isya: "19:32" },
+    "28-01": { subuh: "04:40", dzuhur: "12:06", ashar: "15:27", maghrib: "18:18", isya: "19:32" },
+    "29-01": { subuh: "04:41", dzuhur: "12:06", ashar: "15:27", maghrib: "18:18", isya: "19:32" },
+    "30-01": { subuh: "04:41", dzuhur: "12:06", ashar: "15:27", maghrib: "18:19", isya: "19:32" },
+    "31-01": { subuh: "04:42", dzuhur: "12:07", ashar: "15:27", maghrib: "18:19", isya: "19:32" },
+    "01-02": { subuh: "04:42", dzuhur: "12:07", ashar: "15:27", maghrib: "18:19", isya: "19:31" },
+	"02-02": { subuh: "04:43", dzuhur: "12:07", ashar: "15:26", maghrib: "18:19", isya: "19:31" },
+	"03-02": { subuh: "04:43", dzuhur: "12:07", ashar: "15:26", maghrib: "18:18", isya: "19:31" },
+	"04-02": { subuh: "04:43", dzuhur: "12:07", ashar: "15:26", maghrib: "18:18", isya: "19:31" },
+	"05-02": { subuh: "04:44", dzuhur: "12:07", ashar: "15:25", maghrib: "18:18", isya: "19:31" },
+	"06-02": { subuh: "04:44", dzuhur: "12:07", ashar: "15:25", maghrib: "18:18", isya: "19:31" },
+	"07-02": { subuh: "04:44", dzuhur: "12:07", ashar: "15:25", maghrib: "18:18", isya: "19:30" },
+	"08-02": { subuh: "04:45", dzuhur: "12:07", ashar: "15:24", maghrib: "18:18", isya: "19:30" },
+	"09-02": { subuh: "04:45", dzuhur: "12:08", ashar: "15:24", maghrib: "18:18", isya: "19:30" },
+	"10-02": { subuh: "04:45", dzuhur: "12:08", ashar: "15:23", maghrib: "18:18", isya: "19:30" },
+	"11-02": { subuh: "04:46", dzuhur: "12:08", ashar: "15:23", maghrib: "18:18", isya: "19:29" },
+	"12-02": { subuh: "04:46", dzuhur: "12:08", ashar: "15:22", maghrib: "18:18", isya: "19:29" },
+	"13-02": { subuh: "04:46", dzuhur: "12:08", ashar: "15:22", maghrib: "18:17", isya: "19:29" },
+	"14-02": { subuh: "04:47", dzuhur: "12:08", ashar: "15:21", maghrib: "18:17", isya: "19:28" },
+	"15-02": { subuh: "04:47", dzuhur: "12:07", ashar: "15:21", maghrib: "18:17", isya: "19:28" },
+	"16-02": { subuh: "04:47", dzuhur: "12:07", ashar: "15:20", maghrib: "18:17", isya: "19:28" },
+	"17-02": { subuh: "04:47", dzuhur: "12:07", ashar: "15:19", maghrib: "18:16", isya: "19:28" },
+	"18-02": { subuh: "04:47", dzuhur: "12:07", ashar: "15:19", maghrib: "18:16", isya: "19:27" },
+	"19-02": { subuh: "04:48", dzuhur: "12:07", ashar: "15:18", maghrib: "18:16", isya: "19:27" },
+	"20-02": { subuh: "04:48", dzuhur: "12:07", ashar: "15:17", maghrib: "18:16", isya: "19:26" },
+	"21-02": { subuh: "04:48", dzuhur: "12:07", ashar: "15:16", maghrib: "18:15", isya: "19:26" },
+	"22-02": { subuh: "04:48", dzuhur: "12:07", ashar: "15:16", maghrib: "18:15", isya: "19:26" },
+	"23-02": { subuh: "04:48", dzuhur: "12:07", ashar: "15:15", maghrib: "18:15", isya: "19:25" },
+	"24-02": { subuh: "04:48", dzuhur: "12:07", ashar: "15:14", maghrib: "18:14", isya: "19:25" },
+	"25-02": { subuh: "04:49", dzuhur: "12:06", ashar: "15:13", maghrib: "18:14", isya: "19:24" },
+	"26-02": { subuh: "04:49", dzuhur: "12:06", ashar: "15:12", maghrib: "18:14", isya: "19:24" },
+	"27-02": { subuh: "04:49", dzuhur: "12:06", ashar: "15:11", maghrib: "18:13", isya: "19:24" },
+	"28-02": { subuh: "04:49", dzuhur: "12:06", ashar: "15:10", maghrib: "18:13", isya: "19:23" },
+	"29-02": { subuh: "04:49", dzuhur: "12:06", ashar: "15:09", maghrib: "18:13", isya: "19:23" },
+	"01-03": { subuh: "04:50", dzuhur: "12:06", ashar: "15:10", maghrib: "18:13", isya: "19:23" },
+    "02-03": { subuh: "04:50", dzuhur: "12:06", ashar: "15:09", maghrib: "18:12", isya: "19:22" },
+    "03-03": { subuh: "04:50", dzuhur: "12:06", ashar: "15:08", maghrib: "18:12", isya: "19:22" },
+    "04-03": { subuh: "04:50", dzuhur: "12:06", ashar: "15:07", maghrib: "18:12", isya: "19:21" },
+    "05-03": { subuh: "04:50", dzuhur: "12:05", ashar: "15:07", maghrib: "18:11", isya: "19:21" },
+    "06-03": { subuh: "04:50", dzuhur: "12:05", ashar: "15:08", maghrib: "18:11", isya: "19:20" },
+    "07-03": { subuh: "04:50", dzuhur: "12:05", ashar: "15:08", maghrib: "18:10", isya: "19:20" },
+    "08-03": { subuh: "04:50", dzuhur: "12:05", ashar: "15:09", maghrib: "18:10", isya: "19:19" },
+    "09-03": { subuh: "04:50", dzuhur: "12:04", ashar: "15:09", maghrib: "18:10", isya: "19:19" },
+    "10-03": { subuh: "04:50", dzuhur: "12:04", ashar: "15:09", maghrib: "18:09", isya: "19:18" },
+    "11-03": { subuh: "04:50", dzuhur: "12:04", ashar: "15:10", maghrib: "18:09", isya: "19:18" },
+    "12-03": { subuh: "04:50", dzuhur: "12:04", ashar: "15:10", maghrib: "18:08", isya: "19:18" },
+    "13-03": { subuh: "04:50", dzuhur: "12:03", ashar: "15:10", maghrib: "18:08", isya: "19:17" },
+    "14-03": { subuh: "04:50", dzuhur: "12:03", ashar: "15:11", maghrib: "18:07", isya: "19:17" },
+    "15-03": { subuh: "04:50", dzuhur: "12:03", ashar: "15:11", maghrib: "18:07", isya: "19:16" },
+    "16-03": { subuh: "04:49", dzuhur: "12:03", ashar: "15:11", maghrib: "18:06", isya: "19:16" },
+    "17-03": { subuh: "04:49", dzuhur: "12:02", ashar: "15:12", maghrib: "18:06", isya: "19:15" },
+    "18-03": { subuh: "04:49", dzuhur: "12:02", ashar: "15:12", maghrib: "18:06", isya: "19:15" },
+    "19-03": { subuh: "04:49", dzuhur: "12:02", ashar: "15:12", maghrib: "18:05", isya: "19:14" },
+    "20-03": { subuh: "04:49", dzuhur: "12:01", ashar: "15:12", maghrib: "18:05", isya: "19:14" },
+    "21-03": { subuh: "04:49", dzuhur: "12:01", ashar: "15:12", maghrib: "18:04", isya: "19:13" },
+    "22-03": { subuh: "04:49", dzuhur: "12:01", ashar: "15:13", maghrib: "18:04", isya: "19:13" },
+    "23-03": { subuh: "04:49", dzuhur: "12:00", ashar: "15:13", maghrib: "18:03", isya: "19:12" },
+    "24-03": { subuh: "04:49", dzuhur: "12:00", ashar: "15:13", maghrib: "18:03", isya: "19:12" },
+    "25-03": { subuh: "04:48", dzuhur: "12:00", ashar: "15:13", maghrib: "18:02", isya: "19:11" },
+    "26-03": { subuh: "04:48", dzuhur: "12:00", ashar: "15:13", maghrib: "18:02", isya: "19:11" },
+    "27-03": { subuh: "04:48", dzuhur: "11:59", ashar: "15:13", maghrib: "18:01", isya: "19:10" },
+    "28-03": { subuh: "04:48", dzuhur: "11:59", ashar: "15:13", maghrib: "18:01", isya: "19:10" },
+    "29-03": { subuh: "04:48", dzuhur: "11:59", ashar: "15:13", maghrib: "18:00", isya: "19:10" },
+    "30-03": { subuh: "04:48", dzuhur: "11:58", ashar: "15:13", maghrib: "18:00", isya: "19:09" },
+    "31-03": { subuh: "04:47", dzuhur: "11:58", ashar: "15:13", maghrib: "17:59", isya: "19:09" },
+	"01-04": { subuh: "04:47", dzuhur: "11:58", ashar: "15:14", maghrib: "17:59", isya: "19:08" },
+    "02-04": { subuh: "04:47", dzuhur: "11:57", ashar: "15:14", maghrib: "17:59", isya: "19:08" },
+    "03-04": { subuh: "04:47", dzuhur: "11:57", ashar: "15:14", maghrib: "17:58", isya: "19:07" },
+    "04-04": { subuh: "04:47", dzuhur: "11:57", ashar: "15:14", maghrib: "17:58", isya: "19:07" },
+    "05-04": { subuh: "04:47", dzuhur: "11:57", ashar: "15:14", maghrib: "17:57", isya: "19:07" },
+    "06-04": { subuh: "04:46", dzuhur: "11:56", ashar: "15:14", maghrib: "17:57", isya: "19:06" },
+    "07-04": { subuh: "04:46", dzuhur: "11:56", ashar: "15:14", maghrib: "17:56", isya: "19:06" },
+    "08-04": { subuh: "04:46", dzuhur: "11:56", ashar: "15:14", maghrib: "17:56", isya: "19:05" },
+    "09-04": { subuh: "04:46", dzuhur: "11:56", ashar: "15:14", maghrib: "17:55", isya: "19:05" },
+    "10-04": { subuh: "04:46", dzuhur: "11:55", ashar: "15:14", maghrib: "17:55", isya: "19:05" },
+    "11-04": { subuh: "04:46", dzuhur: "11:55", ashar: "15:14", maghrib: "17:55", isya: "19:04" },
+    "12-04": { subuh: "04:45", dzuhur: "11:55", ashar: "15:14", maghrib: "17:54", isya: "19:04" },
+    "13-04": { subuh: "04:45", dzuhur: "11:54", ashar: "15:14", maghrib: "17:54", isya: "19:04" },
+    "14-04": { subuh: "04:45", dzuhur: "11:54", ashar: "15:13", maghrib: "17:53", isya: "19:03" },
+    "15-04": { subuh: "04:45", dzuhur: "11:54", ashar: "15:13", maghrib: "17:53", isya: "19:03" },
+    "16-04": { subuh: "04:45", dzuhur: "11:54", ashar: "15:13", maghrib: "17:53", isya: "19:03" },
+    "17-04": { subuh: "04:45", dzuhur: "11:54", ashar: "15:13", maghrib: "17:52", isya: "19:02" },
+    "18-04": { subuh: "04:45", dzuhur: "11:53", ashar: "15:13", maghrib: "17:52", isya: "19:02" },
+    "19-04": { subuh: "04:44", dzuhur: "11:53", ashar: "15:13", maghrib: "17:51", isya: "19:02" },
+    "20-04": { subuh: "04:44", dzuhur: "11:53", ashar: "15:13", maghrib: "17:51", isya: "19:01" },
+    "21-04": { subuh: "04:44", dzuhur: "11:53", ashar: "15:13", maghrib: "17:51", isya: "19:01" },
+    "22-04": { subuh: "04:44", dzuhur: "11:52", ashar: "15:13", maghrib: "17:50", isya: "19:01" },
+    "23-04": { subuh: "04:44", dzuhur: "11:52", ashar: "15:13", maghrib: "17:50", isya: "19:01" },
+    "24-04": { subuh: "04:44", dzuhur: "11:52", ashar: "15:13", maghrib: "17:50", isya: "19:00" },
+    "25-04": { subuh: "04:44", dzuhur: "11:52", ashar: "15:13", maghrib: "17:49", isya: "19:00" },
+    "26-04": { subuh: "04:43", dzuhur: "11:52", ashar: "15:13", maghrib: "17:49", isya: "19:00" },
+    "27-04": { subuh: "04:43", dzuhur: "11:52", ashar: "15:13", maghrib: "17:49", isya: "19:00" },
+    "28-04": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:49", isya: "19:00" },
+    "29-04": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:48", isya: "18:59" },
+    "30-04": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:48", isya: "18:59" },
+	"01-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:48", isya: "18:59" },
+    "02-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:47", isya: "18:59" },
+    "03-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:47", isya: "18:59" },
+    "04-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:47", isya: "18:59" },
+    "05-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:47", isya: "18:59" },
+    "06-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:12", maghrib: "17:47", isya: "18:59" },
+    "07-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:12", maghrib: "17:46", isya: "18:58" },
+    "08-05": { subuh: "04:43", dzuhur: "11:50", ashar: "15:12", maghrib: "17:46", isya: "18:58" },
+    "09-05": { subuh: "04:43", dzuhur: "11:50", ashar: "15:12", maghrib: "17:46", isya: "18:58" },
+    "10-05": { subuh: "04:43", dzuhur: "11:50", ashar: "15:12", maghrib: "17:46", isya: "18:58" },
+    "11-05": { subuh: "04:43", dzuhur: "11:50", ashar: "15:12", maghrib: "17:46", isya: "18:58" },
+    "12-05": { subuh: "04:43", dzuhur: "11:50", ashar: "15:12", maghrib: "17:46", isya: "18:58" },
+    "13-05": { subuh: "04:43", dzuhur: "11:50", ashar: "15:12", maghrib: "17:46", isya: "18:58" },
+    "14-05": { subuh: "04:43", dzuhur: "11:50", ashar: "15:12", maghrib: "17:45", isya: "18:58" },
+    "15-05": { subuh: "04:43", dzuhur: "11:50", ashar: "15:13", maghrib: "17:45", isya: "18:58" },
+    "16-05": { subuh: "04:43", dzuhur: "11:50", ashar: "15:13", maghrib: "17:45", isya: "18:58" },
+    "17-05": { subuh: "04:43", dzuhur: "11:50", ashar: "15:13", maghrib: "17:45", isya: "18:58" },
+    "18-05": { subuh: "04:43", dzuhur: "11:50", ashar: "15:13", maghrib: "17:45", isya: "18:58" },
+    "19-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:45", isya: "18:58" },
+    "20-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:45", isya: "18:58" },
+    "21-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:45", isya: "18:58" },
+    "22-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:45", isya: "18:58" },
+    "23-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:45", isya: "18:59" },
+    "24-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:45", isya: "18:59" },
+    "25-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:45", isya: "18:59" },
+    "26-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:45", isya: "18:59" },
+    "27-05": { subuh: "04:43", dzuhur: "11:51", ashar: "15:13", maghrib: "17:45", isya: "18:59" },
+    "28-05": { subuh: "04:44", dzuhur: "11:51", ashar: "15:13", maghrib: "17:45", isya: "18:59" },
+    "29-05": { subuh: "04:44", dzuhur: "11:51", ashar: "15:14", maghrib: "17:45", isya: "18:59" },
+    "30-05": { subuh: "04:44", dzuhur: "11:52", ashar: "15:14", maghrib: "17:45", isya: "18:59" },
+    "31-05": { subuh: "04:44", dzuhur: "11:52", ashar: "15:14", maghrib: "17:45", isya: "19:00" },
+	"01-06": { subuh: "04:44", dzuhur: "11:52", ashar: "15:14", maghrib: "17:45", isya: "19:00" },
+	"02-06": { subuh: "04:44", dzuhur: "11:52", ashar: "15:14", maghrib: "17:46", isya: "19:00" },
+	"03-06": { subuh: "04:44", dzuhur: "11:52", ashar: "15:14", maghrib: "17:46", isya: "19:00" },
+	"04-06": { subuh: "04:45", dzuhur: "11:52", ashar: "15:14", maghrib: "17:46", isya: "19:00" },
+	"05-06": { subuh: "04:45", dzuhur: "11:53", ashar: "15:15", maghrib: "17:46", isya: "19:00" },
+	"06-06": { subuh: "04:45", dzuhur: "11:53", ashar: "15:15", maghrib: "17:46", isya: "19:01" },
+	"07-06": { subuh: "04:45", dzuhur: "11:53", ashar: "15:15", maghrib: "17:46", isya: "19:01" },
+	"08-06": { subuh: "04:45", dzuhur: "11:53", ashar: "15:15", maghrib: "17:46", isya: "19:01" },
+	"09-06": { subuh: "04:45", dzuhur: "11:53", ashar: "15:15", maghrib: "17:46", isya: "19:01" },
+	"10-06": { subuh: "04:46", dzuhur: "11:54", ashar: "15:16", maghrib: "17:47", isya: "19:01" },
+	"11-06": { subuh: "04:46", dzuhur: "11:54", ashar: "15:16", maghrib: "17:47", isya: "19:02" },
+	"12-06": { subuh: "04:46", dzuhur: "11:54", ashar: "15:16", maghrib: "17:47", isya: "19:02" },
+	"13-06": { subuh: "04:46", dzuhur: "11:54", ashar: "15:16", maghrib: "17:47", isya: "19:02" },
+	"14-06": { subuh: "04:46", dzuhur: "11:54", ashar: "15:16", maghrib: "17:47", isya: "19:02" },
+	"15-06": { subuh: "04:47", dzuhur: "11:55", ashar: "15:17", maghrib: "17:48", isya: "19:02" },
+	"16-06": { subuh: "04:47", dzuhur: "11:55", ashar: "15:17", maghrib: "17:48", isya: "19:03" },
+	"17-06": { subuh: "04:47", dzuhur: "11:55", ashar: "15:17", maghrib: "17:48", isya: "19:03" },
+	"18-06": { subuh: "04:47", dzuhur: "11:55", ashar: "15:17", maghrib: "17:48", isya: "19:03" },
+	"19-06": { subuh: "04:48", dzuhur: "11:55", ashar: "15:17", maghrib: "17:48", isya: "19:03" },
+	"20-06": { subuh: "04:48", dzuhur: "11:56", ashar: "15:18", maghrib: "17:49", isya: "19:04" },
+	"21-06": { subuh: "04:48", dzuhur: "11:56", ashar: "15:18", maghrib: "17:49", isya: "19:04" },
+	"22-06": { subuh: "04:48", dzuhur: "11:56", ashar: "15:18", maghrib: "17:49", isya: "19:04" },
+	"23-06": { subuh: "04:48", dzuhur: "11:56", ashar: "15:18", maghrib: "17:49", isya: "19:04" },
+	"24-06": { subuh: "04:49", dzuhur: "11:57", ashar: "15:18", maghrib: "17:49", isya: "19:04" },
+	"25-06": { subuh: "04:49", dzuhur: "11:57", ashar: "15:19", maghrib: "17:50", isya: "19:05" },
+	"26-06": { subuh: "04:49", dzuhur: "11:57", ashar: "15:19", maghrib: "17:50", isya: "19:05" },
+	"27-06": { subuh: "04:49", dzuhur: "11:57", ashar: "15:19", maghrib: "17:50", isya: "19:05" },
+	"28-06": { subuh: "04:49", dzuhur: "11:57", ashar: "15:19", maghrib: "17:50", isya: "19:05" },
+	"29-06": { subuh: "04:50", dzuhur: "11:58", ashar: "15:20", maghrib: "17:51", isya: "19:05" },
+	"30-06": { subuh: "04:50", dzuhur: "11:58", ashar: "15:20", maghrib: "17:51", isya: "19:06" },
+	"01-07": { subuh: "04:49", dzuhur: "11:57", ashar: "15:19", maghrib: "17:50", isya: "19:05" },
+    "02-07": { subuh: "04:49", dzuhur: "11:57", ashar: "15:19", maghrib: "17:50", isya: "19:05" },
+    "03-07": { subuh: "04:50", dzuhur: "11:57", ashar: "15:19", maghrib: "17:51", isya: "19:05" },
+    "04-07": { subuh: "04:50", dzuhur: "11:58", ashar: "15:20", maghrib: "17:51", isya: "19:05" },
+    "05-07": { subuh: "04:50", dzuhur: "11:58", ashar: "15:20", maghrib: "17:51", isya: "19:06" },
+    "06-07": { subuh: "04:50", dzuhur: "11:58", ashar: "15:20", maghrib: "17:51", isya: "19:06" },
+    "07-07": { subuh: "04:50", dzuhur: "11:58", ashar: "15:20", maghrib: "17:51", isya: "19:06" },
+    "08-07": { subuh: "04:51", dzuhur: "11:58", ashar: "15:20", maghrib: "17:52", isya: "19:06" },
+    "09-07": { subuh: "04:51", dzuhur: "11:58", ashar: "15:21", maghrib: "17:52", isya: "19:06" },
+    "10-07": { subuh: "04:51", dzuhur: "11:59", ashar: "15:21", maghrib: "17:52", isya: "19:06" },
+    "11-07": { subuh: "04:51", dzuhur: "11:59", ashar: "15:21", maghrib: "17:52", isya: "19:06" },
+    "12-07": { subuh: "04:51", dzuhur: "11:59", ashar: "15:21", maghrib: "17:52", isya: "19:07" },
+    "13-07": { subuh: "04:51", dzuhur: "11:59", ashar: "15:21", maghrib: "17:53", isya: "19:07" },
+    "14-07": { subuh: "04:51", dzuhur: "11:59", ashar: "15:21", maghrib: "17:53", isya: "19:07" },
+    "15-07": { subuh: "04:51", dzuhur: "11:59", ashar: "15:21", maghrib: "17:53", isya: "19:07" },
+    "16-07": { subuh: "04:52", dzuhur: "11:59", ashar: "15:21", maghrib: "17:53", isya: "19:07" },
+    "17-07": { subuh: "04:52", dzuhur: "11:59", ashar: "15:22", maghrib: "17:53", isya: "19:07" },
+    "18-07": { subuh: "04:52", dzuhur: "11:59", ashar: "15:22", maghrib: "17:54", isya: "19:07" },
+    "19-07": { subuh: "04:52", dzuhur: "11:59", ashar: "15:22", maghrib: "17:54", isya: "19:07" },
+    "20-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:54", isya: "19:07" },
+    "21-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:54", isya: "19:07" },
+    "22-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:54", isya: "19:07" },
+    "23-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:54", isya: "19:07" },
+    "24-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:54", isya: "19:07" },
+    "25-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:54", isya: "19:07" },
+    "26-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:55", isya: "19:07" },
+    "27-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:55", isya: "19:07" },
+    "28-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:55", isya: "19:07" },
+    "29-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:55", isya: "19:07" },
+    "30-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:55", isya: "19:07" },
+    "31-07": { subuh: "04:52", dzuhur: "12:00", ashar: "15:22", maghrib: "17:55", isya: "19:07" },
+	"01-08": { subuh: "04:52", dzuhur: "11:59", ashar: "15:21", maghrib: "17:55", isya: "19:07" },
+	"02-08": { subuh: "04:52", dzuhur: "11:59", ashar: "15:21", maghrib: "17:55", isya: "19:07" },
+	"03-08": { subuh: "04:51", dzuhur: "11:59", ashar: "15:21", maghrib: "17:55", isya: "19:07" },
+	"04-08": { subuh: "04:51", dzuhur: "11:59", ashar: "15:21", maghrib: "17:55", isya: "19:07" },
+	"05-08": { subuh: "04:51", dzuhur: "11:59", ashar: "15:21", maghrib: "17:55", isya: "19:07" },
+	"06-08": { subuh: "04:51", dzuhur: "11:59", ashar: "15:21", maghrib: "17:55", isya: "19:07" },
+	"07-08": { subuh: "04:51", dzuhur: "11:59", ashar: "15:21", maghrib: "17:55", isya: "19:07" },
+	"08-08": { subuh: "04:51", dzuhur: "11:59", ashar: "15:20", maghrib: "17:55", isya: "19:07" },
+	"09-08": { subuh: "04:51", dzuhur: "11:59", ashar: "15:20", maghrib: "17:55", isya: "19:07" },
+	"10-08": { subuh: "04:50", dzuhur: "11:58", ashar: "15:20", maghrib: "17:55", isya: "19:07" },
+"11-08": { subuh: "04:50", dzuhur: "11:58", ashar: "15:20", maghrib: "17:55", isya: "19:06" },
+"12-08": { subuh: "04:50", dzuhur: "11:58", ashar: "15:20", maghrib: "17:55", isya: "19:06" },
+"13-08": { subuh: "04:50", dzuhur: "11:58", ashar: "15:19", maghrib: "17:55", isya: "19:06" },
+"14-08": { subuh: "04:50", dzuhur: "11:58", ashar: "15:19", maghrib: "17:55", isya: "19:06" },
+"15-08": { subuh: "04:49", dzuhur: "11:58", ashar: "15:19", maghrib: "17:55", isya: "19:06" },
+"16-08": { subuh: "04:49", dzuhur: "11:57", ashar: "15:18", maghrib: "17:55", isya: "19:06" },
+"17-08": { subuh: "04:49", dzuhur: "11:57", ashar: "15:18", maghrib: "17:55", isya: "19:06" },
+"18-08": { subuh: "04:49", dzuhur: "11:57", ashar: "15:18", maghrib: "17:55", isya: "19:05" },
+"19-08": { subuh: "04:48", dzuhur: "11:57", ashar: "15:17", maghrib: "17:55", isya: "19:05" },
+"20-08": { subuh: "04:48", dzuhur: "11:56", ashar: "15:17", maghrib: "17:54", isya: "19:05" },
+"21-08": { subuh: "04:48", dzuhur: "11:56", ashar: "15:17", maghrib: "17:54", isya: "19:05" },
+"22-08": { subuh: "04:47", dzuhur: "11:56", ashar: "15:16", maghrib: "17:54", isya: "19:05" },
+"23-08": { subuh: "04:47", dzuhur: "11:56", ashar: "15:16", maghrib: "17:54", isya: "19:04" },
+"24-08": { subuh: "04:47", dzuhur: "11:55", ashar: "15:15", maghrib: "17:54", isya: "19:04" },
+"25-08": { subuh: "04:46", dzuhur: "11:55", ashar: "15:15", maghrib: "17:54", isya: "19:04" },
+"26-08": { subuh: "04:46", dzuhur: "11:55", ashar: "15:14", maghrib: "17:54", isya: "19:04" },
+"27-08": { subuh: "04:46", dzuhur: "11:55", ashar: "15:14", maghrib: "17:54", isya: "19:04" },
+"28-08": { subuh: "04:45", dzuhur: "11:54", ashar: "15:13", maghrib: "17:53", isya: "19:03" },
+"29-08": { subuh: "04:45", dzuhur: "11:54", ashar: "15:13", maghrib: "17:53", isya: "19:03" },
+	"30-08": { subuh: "04:44", dzuhur: "11:54", ashar: "15:12", maghrib: "17:53", isya: "19:03" },
+	"31-08": { subuh: "04:44", dzuhur: "11:53", ashar: "15:12", maghrib: "17:53", isya: "19:03" },
+	"01-09": { subuh: "04:44", dzuhur: "11:53", ashar: "15:11", maghrib: "17:53", isya: "19:03" },
+	"02-09": { subuh: "04:43", dzuhur: "11:53", ashar: "15:11", maghrib: "17:53", isya: "19:02" },
+	"03-09": { subuh: "04:43", dzuhur: "11:52", ashar: "15:10", maghrib: "17:53", isya: "19:02" },
+	"04-09": { subuh: "04:42", dzuhur: "11:52", ashar: "15:09", maghrib: "17:52", isya: "19:02" },
+"05-09": { subuh: "04:42", dzuhur: "11:52", ashar: "15:09", maghrib: "17:52", isya: "19:02" },
+"06-09": { subuh: "04:41", dzuhur: "11:51", ashar: "15:08", maghrib: "17:52", isya: "19:02" },
+"07-09": { subuh: "04:41", dzuhur: "11:51", ashar: "15:08", maghrib: "17:52", isya: "19:01" },
+"08-09": { subuh: "04:40", dzuhur: "11:51", ashar: "15:07", maghrib: "17:52", isya: "19:01" },
+"09-09": { subuh: "04:40", dzuhur: "11:50", ashar: "15:06", maghrib: "17:51", isya: "19:01" },
+"10-09": { subuh: "04:39", dzuhur: "11:50", ashar: "15:06", maghrib: "17:51", isya: "19:01" },
+"11-09": { subuh: "04:39", dzuhur: "11:50", ashar: "15:05", maghrib: "17:51", isya: "19:00" },
+"12-09": { subuh: "04:38", dzuhur: "11:49", ashar: "15:04", maghrib: "17:51", isya: "19:00" },
+"13-09": { subuh: "04:38", dzuhur: "11:49", ashar: "15:03", maghrib: "17:51", isya: "19:00" },
+"14-09": { subuh: "04:37", dzuhur: "11:49", ashar: "15:03", maghrib: "17:51", isya: "19:00" },
+"15-09": { subuh: "04:37", dzuhur: "11:48", ashar: "15:02", maghrib: "17:50", isya: "19:00" },
+"16-09": { subuh: "04:36", dzuhur: "11:48", ashar: "15:01", maghrib: "17:50", isya: "18:59" },
+"17-09": { subuh: "04:36", dzuhur: "11:48", ashar: "15:00", maghrib: "17:50", isya: "18:59" },
+"18-09": { subuh: "04:35", dzuhur: "11:47", ashar: "15:00", maghrib: "17:50", isya: "18:59" },
+"19-09": { subuh: "04:35", dzuhur: "11:47", ashar: "14:59", maghrib: "17:50", isya: "18:59" },
+"20-09": { subuh: "04:34", dzuhur: "11:46", ashar: "14:58", maghrib: "17:49", isya: "18:59" },
+"21-09": { subuh: "04:34", dzuhur: "11:46", ashar: "14:57", maghrib: "17:49", isya: "18:58" },
+"22-09": { subuh: "04:33", dzuhur: "11:46", ashar: "14:56", maghrib: "17:49", isya: "18:58" },
+"23-09": { subuh: "04:33", dzuhur: "11:45", ashar: "14:55", maghrib: "17:49", isya: "18:58" },
+"24-09": { subuh: "04:32", dzuhur: "11:45", ashar: "14:55", maghrib: "17:49", isya: "18:58" },
+"25-09": { subuh: "04:32", dzuhur: "11:45", ashar: "14:54", maghrib: "17:48", isya: "18:58" },
+"26-09": { subuh: "04:31", dzuhur: "11:44", ashar: "14:53", maghrib: "17:48", isya: "18:58" },
+"27-09": { subuh: "04:31", dzuhur: "11:44", ashar: "14:52", maghrib: "17:48", isya: "18:57" },
+"28-09": { subuh: "04:30", dzuhur: "11:44", ashar: "14:51", maghrib: "17:48", isya: "18:57" },
+	"29-09": { subuh: "04:30", dzuhur: "11:43", ashar: "14:50", maghrib: "17:48", isya: "18:57" },
+	"30-09": { subuh: "04:29", dzuhur: "11:43", ashar: "14:49", maghrib: "17:48", isya: "18:57" },
+	"01-10": { subuh: "04:28", dzuhur: "11:43", ashar: "14:48", maghrib: "17:48", isya: "18:57" },
+	"02-10": { subuh: "04:28", dzuhur: "11:42", ashar: "14:47", maghrib: "17:47", isya: "18:57" },
+	"03-10": { subuh: "04:27", dzuhur: "11:42", ashar: "14:46", maghrib: "17:47", isya: "18:57" },
+	"04-10": { subuh: "04:27", dzuhur: "11:42", ashar: "14:45", maghrib: "17:47", isya: "18:57" },
+	"05-10": { subuh: "04:26", dzuhur: "11:41", ashar: "14:45", maghrib: "17:47", isya: "18:57" },
+	"06-10": { subuh: "04:26", dzuhur: "11:41", ashar: "14:44", maghrib: "17:47", isya: "18:57" },
+	"07-10": { subuh: "04:25", dzuhur: "11:41", ashar: "14:43", maghrib: "17:47", isya: "18:56" },
+	"08-10": { subuh: "04:25", dzuhur: "11:41", ashar: "14:42", maghrib: "17:47", isya: "18:56" },
+	"09-10": { subuh: "04:24", dzuhur: "11:40", ashar: "14:42", maghrib: "17:47", isya: "18:56" },
+	"10-10": { subuh: "04:24", dzuhur: "11:40", ashar: "14:43", maghrib: "17:46", isya: "18:56" },
+	"11-10": { subuh: "04:23", dzuhur: "11:40", ashar: "14:43", maghrib: "17:46", isya: "18:56" },
+	"12-10": { subuh: "04:23", dzuhur: "11:40", ashar: "14:44", maghrib: "17:46", isya: "18:56" },
+	"13-10": { subuh: "04:22", dzuhur: "11:39", ashar: "14:44", maghrib: "17:46", isya: "18:56" },
+"14-10": { subuh: "04:22", dzuhur: "11:39", ashar: "14:45", maghrib: "17:46", isya: "18:56" },
+"15-10": { subuh: "04:21", dzuhur: "11:39", ashar: "14:45", maghrib: "17:46", isya: "18:56" },
+"16-10": { subuh: "04:21", dzuhur: "11:39", ashar: "14:46", maghrib: "17:46", isya: "18:56" },
+"17-10": { subuh: "04:20", dzuhur: "11:38", ashar: "14:46", maghrib: "17:46", isya: "18:56" },
+"18-10": { subuh: "04:20", dzuhur: "11:38", ashar: "14:47", maghrib: "17:46", isya: "18:56" },
+"19-10": { subuh: "04:20", dzuhur: "11:38", ashar: "14:47", maghrib: "17:46", isya: "18:57" },
+"20-10": { subuh: "04:19", dzuhur: "11:38", ashar: "14:48", maghrib: "17:46", isya: "18:57" },
+"21-10": { subuh: "04:19", dzuhur: "11:38", ashar: "14:48", maghrib: "17:46", isya: "18:57" },
+"22-10": { subuh: "04:18", dzuhur: "11:38", ashar: "14:49", maghrib: "17:46", isya: "18:57" },
+"23-10": { subuh: "04:18", dzuhur: "11:37", ashar: "14:49", maghrib: "17:46", isya: "18:57" },
+"24-10": { subuh: "04:17", dzuhur: "11:37", ashar: "14:50", maghrib: "17:46", isya: "18:57" },
+"25-10": { subuh: "04:17", dzuhur: "11:37", ashar: "14:50", maghrib: "17:46", isya: "18:57" },
+"26-10": { subuh: "04:17", dzuhur: "11:37", ashar: "14:51", maghrib: "17:46", isya: "18:57" },
+	"27-10": { subuh: "04:16", dzuhur: "11:37", ashar: "14:51", maghrib: "17:46", isya: "18:58" },
+	"28-10": { subuh: "04:16", dzuhur: "11:37", ashar: "14:52", maghrib: "17:46", isya: "18:58" },		
+	"29-10": { subuh: "04:16", dzuhur: "11:37", ashar: "14:52", maghrib: "17:46", isya: "18:58" },
+	"30-10": { subuh: "04:15", dzuhur: "11:37", ashar: "14:52", maghrib: "17:46", isya: "18:58" },
+	"31-10": { subuh: "04:15", dzuhur: "11:37", ashar: "14:53", maghrib: "17:47", isya: "18:58" },
+	"01-11": { subuh: "04:15", dzuhur: "11:37", ashar: "14:53", maghrib: "17:47", isya: "18:59" },
+	"02-11": { subuh: "04:14", dzuhur: "11:37", ashar: "14:54", maghrib: "17:47", isya: "18:59" },
+	"03-11": { subuh: "04:14", dzuhur: "11:37", ashar: "14:54", maghrib: "17:47", isya: "18:59" },
+	"04-11": { subuh: "04:14", dzuhur: "11:37", ashar: "14:55", maghrib: "17:47", isya: "18:59" },
+	"05-11": { subuh: "04:14", dzuhur: "11:37", ashar: "14:55", maghrib: "17:47", isya: "19:00" },
+"06-11": { subuh: "04:13", dzuhur: "11:37", ashar: "14:56", maghrib: "17:48", isya: "19:00" },
+"07-11": { subuh: "04:13", dzuhur: "11:37", ashar: "14:56", maghrib: "17:48", isya: "19:00" },
+"08-11": { subuh: "04:13", dzuhur: "11:37", ashar: "14:57", maghrib: "17:48", isya: "19:01" },
+"09-11": { subuh: "04:13", dzuhur: "11:37", ashar: "14:57", maghrib: "17:48", isya: "19:01" },
+"10-11": { subuh: "04:13", dzuhur: "11:37", ashar: "14:57", maghrib: "17:48", isya: "19:01" },
+"11-11": { subuh: "04:13", dzuhur: "11:37", ashar: "14:58", maghrib: "17:49", isya: "19:02" },
+"12-11": { subuh: "04:12", dzuhur: "11:37", ashar: "14:58", maghrib: "17:49", isya: "19:02" },
+"13-11": { subuh: "04:12", dzuhur: "11:37", ashar: "14:59", maghrib: "17:49", isya: "19:03" },
+"14-11": { subuh: "04:12", dzuhur: "11:38", ashar: "14:59", maghrib: "17:49", isya: "19:03" },
+"15-11": { subuh: "04:12", dzuhur: "11:38", ashar: "15:00", maghrib: "17:50", isya: "19:03" },
+"16-11": { subuh: "04:12", dzuhur: "11:38", ashar: "15:00", maghrib: "17:50", isya: "19:04" },
+"17-11": { subuh: "04:12", dzuhur: "11:38", ashar: "15:01", maghrib: "17:50", isya: "19:04" },
+"18-11": { subuh: "04:12", dzuhur: "11:38", ashar: "15:01", maghrib: "17:51", isya: "19:05" },
+"19-11": { subuh: "04:12", dzuhur: "11:39", ashar: "15:02", maghrib: "17:51", isya: "19:05" },
+"20-11": { subuh: "04:12", dzuhur: "11:39", ashar: "15:02", maghrib: "17:51", isya: "19:06" },
+"21-11": { subuh: "04:12", dzuhur: "11:39", ashar: "15:03", maghrib: "17:52", isya: "19:06" },
+"22-11": { subuh: "04:12", dzuhur: "11:39", ashar: "15:03", maghrib: "17:52", isya: "19:07" },
+"23-11": { subuh: "04:12", dzuhur: "11:40", ashar: "15:04", maghrib: "17:53", isya: "19:07" },
+"24-11": { subuh: "04:12", dzuhur: "11:40", ashar: "15:04", maghrib: "17:53", isya: "19:08" },
+"25-11": { subuh: "04:12", dzuhur: "11:40", ashar: "15:05", maghrib: "17:53", isya: "19:08" },
+"26-11": { subuh: "04:12", dzuhur: "11:40", ashar: "15:05", maghrib: "17:54", isya: "19:09" },
+"27-11": { subuh: "04:12", dzuhur: "11:41", ashar: "15:06", maghrib: "17:54", isya: "19:09" },
+"28-11": { subuh: "04:13", dzuhur: "11:41", ashar: "15:06", maghrib: "17:55", isya: "19:10" },
+"29-11": { subuh: "04:13", dzuhur: "11:41", ashar: "15:07", maghrib: "17:55", isya: "19:10" },
+"30-11": { subuh: "04:13", dzuhur: "11:42", ashar: "15:07", maghrib: "17:56", isya: "19:11" },
+"01-12": { subuh: "04:13", dzuhur: "11:42", ashar: "15:08", maghrib: "17:56", isya: "19:11" },
+"02-12": { subuh: "04:13", dzuhur: "11:43", ashar: "15:09", maghrib: "17:56", isya: "19:12" },
+"03-12": { subuh: "04:14", dzuhur: "11:43", ashar: "15:09", maghrib: "17:57", isya: "19:12" },
+"04-12": { subuh: "04:14", dzuhur: "11:43", ashar: "15:10", maghrib: "17:57", isya: "19:13" },
+"05-12": { subuh: "04:14", dzuhur: "11:44", ashar: "15:10", maghrib: "17:58", isya: "19:14" },
+"06-12": { subuh: "04:14", dzuhur: "11:44", ashar: "15:11", maghrib: "17:58", isya: "19:14" },
+"07-12": { subuh: "04:15", dzuhur: "11:45", ashar: "15:11", maghrib: "17:59", isya: "19:15" },
+"08-12": { subuh: "04:15", dzuhur: "11:45", ashar: "15:12", maghrib: "17:59", isya: "19:15" },
+"09-12": { subuh: "04:15", dzuhur: "11:46", ashar: "15:12", maghrib: "18:00", isya: "19:16" },
+"10-12": { subuh: "04:16", dzuhur: "11:46", ashar: "15:13", maghrib: "18:00", isya: "19:16" },
+"11-12": { subuh: "04:16", dzuhur: "11:46", ashar: "15:13", maghrib: "18:01", isya: "19:17" },
+"12-12": { subuh: "04:16", dzuhur: "11:47", ashar: "15:14", maghrib: "18:01", isya: "19:17" },
+"13-12": { subuh: "04:17", dzuhur: "11:47", ashar: "15:14", maghrib: "18:02", isya: "19:18" },
+"14-12": { subuh: "04:17", dzuhur: "11:48", ashar: "15:15", maghrib: "18:02", isya: "19:18" },
+"15-12": { subuh: "04:18", dzuhur: "11:48", ashar: "15:16", maghrib: "18:03", isya: "19:19" },
+"16-12": { subuh: "04:18", dzuhur: "11:49", ashar: "15:16", maghrib: "18:03", isya: "19:20" },
+"17-12": { subuh: "04:19", dzuhur: "11:49", ashar: "15:17", maghrib: "18:04", isya: "19:20" },
+"18-12": { subuh: "04:19", dzuhur: "11:50", ashar: "15:17", maghrib: "18:04", isya: "19:21" },
+"19-12": { subuh: "04:19", dzuhur: "11:50", ashar: "15:18", maghrib: "18:05", isya: "19:21" },
+"20-12": { subuh: "04:20", dzuhur: "11:51", ashar: "15:18", maghrib: "18:05", isya: "19:22" },
+"21-12": { subuh: "04:20", dzuhur: "11:51", ashar: "15:19", maghrib: "18:06", isya: "19:22" },
+"22-12": { subuh: "04:21", dzuhur: "11:52", ashar: "15:19", maghrib: "18:06", isya: "19:23" },
+"23-12": { subuh: "04:21", dzuhur: "11:52", ashar: "15:20", maghrib: "18:07", isya: "19:23" },
+"24-12": { subuh: "04:22", dzuhur: "11:53", ashar: "15:20", maghrib: "18:07", isya: "19:24" },
+"25-12": { subuh: "04:23", dzuhur: "11:53", ashar: "15:21", maghrib: "18:08", isya: "19:24" },
+"26-12": { subuh: "04:23", dzuhur: "11:54", ashar: "15:21", maghrib: "18:08", isya: "19:24" },
+"27-12": { subuh: "04:24", dzuhur: "11:54", ashar: "15:21", maghrib: "18:09", isya: "19:25" },
+"28-12": { subuh: "04:24", dzuhur: "11:55", ashar: "15:22", maghrib: "18:09", isya: "19:25" },
+"29-12": { subuh: "04:25", dzuhur: "11:55", ashar: "15:22", maghrib: "18:10", isya: "19:26" },
+"30-12": { subuh: "04:25", dzuhur: "11:56", ashar: "15:23", maghrib: "18:10", isya: "19:26" },
+"31-12": { subuh: "04:26", dzuhur: "11:56", ashar: "15:23", maghrib: "18:11", isya: "19:27" }
+    // Tambahkan data untuk semua tanggal lainnya di sini...
+};
+        // Fungsi untuk mengonversi tanggal menjadi format "1 Januari"
+        function formatTanggal(tanggal) {
+            const bulanArray = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+            const [day, month] = tanggal.split('-');
+            return `${parseInt(day)} ${bulanArray[parseInt(month) - 1]}`;
+        }
+
+        // Mendapatkan tanggal hari ini dalam format "dd-mm"
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const formattedDate = `${day}-${month}`;
+
+        // Menampilkan jadwal sholat hari ini
+        const jadwalHariIni = jadwalSholat[formattedDate];
+
+        if (jadwalHariIni) {
+            document.getElementById('jadwalHariIni').innerHTML = `
+                <td>${formatTanggal(formattedDate)}</td>
+                <td>${jadwalHariIni.dzuhur}</td>
+                <td>${jadwalHariIni.ashar}</td>
+                <td>${jadwalHariIni.maghrib}</td>
+                <td>${jadwalHariIni.isya}</td>
+                <td>${jadwalHariIni.subuh}</td>
+            `;
+        } else {
+            document.getElementById('jadwalHariIni').innerHTML = `
+                <td colspan="6">Jadwal tidak ditemukan untuk hari ini</td>
+            `;
+        }
+
+        // Fungsi untuk mendapatkan jadwal sholat hari ini
+        function getTodayPrayerTimes() {
+            const dateKey = formattedDate; // Menggunakan formattedDate yang sudah ada
+            return jadwalSholat[dateKey] || {};
+        }
+
+		
+        // Menampilkan jadwal sholat hari ini
+        function displaySchedule() {
+            const schedule = getTodayPrayerTimes();
+            const scheduleDiv = document.getElementById('schedule');
+            scheduleDiv.innerHTML = `
+                
+            `;
+        }
+
+        // Fungsi untuk mendapatkan waktu salat berikutnya
+        function getNextPrayerTime(schedule) {
+            const now = new Date();
+            const prayers = ["subuh", "dzuhur", "ashar", "maghrib", "isya"];
+            for (let prayer of prayers) {
+                const [hours, minutes] = schedule[prayer].split(':').map(Number);
+                const prayerTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+                if (now < prayerTime) {
+                    return { name: prayer, time: prayerTime };
+                }
+            }
+            return null;
+        }
+
+        // Fungsi untuk memperbarui hitungan mundur
+        // Fungsi untuk memperbarui hitungan mundur
+        function updateCountdown() {
+            const schedule = getTodayPrayerTimes();
+            const nextPrayer = getNextPrayerTime(schedule);
+            const nextPrayerDiv = document.getElementById('next-prayer');
+            const countdownDiv = document.getElementById('countdown');
+
+            if (nextPrayer) {
+                nextPrayerDiv.innerHTML = `${nextPrayer.name.charAt(0).toUpperCase() + nextPrayer.name.slice(1)} - ${nextPrayer.time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+
+                const now = new Date();
+                const timeDifference = nextPrayer.time - now;
+                const hours = Math.floor((timeDifference % 86400000) / 3600000);
+                const minutes = Math.floor((timeDifference % 3600000) / 60000);
+                const seconds = Math.floor((timeDifference % 60000) / 1000);
+
+                countdownDiv.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} jam lagi`;
+            } else {
+                nextPrayerDiv.innerHTML = "Tidak ada salat berikutnya hari ini";
+                countdownDiv.innerHTML = "";
+            }
+        }
+
+        displaySchedule();
+        setInterval(updateCountdown, 1000);
+
+    </script>
+			
+			<br>
+            
+            <a href="" class="action-btn">Berita Terkini</a>
+			
+          </div>
+        </section>
+      </main>
+      <div class="footer">
+        <footer>
+          <ul>
+            <li>
+              <a href="https://instagram.com/masjid.jami.baiturahman" class="action-btn"><img src="instagram.png" alt="" /><p>Instagram</p></a>
+            </li>
+            <li>
+              <a href="" class="action-btn"><img src="Youtube.png" alt="" /><p>Youtube</p></a>
+            </li>
+			<li>
+			  <br>
+              <h4><p>Alamat:</p><h4>
+			  <h6><p>Dusun Kamurang, RT 02/RW 06, Desa Puspasari, Citeureup, Kabupaten Bogor.</p></h6>
+			  <br>
+			  <h4><p>Contact Person:</p><h4>
+			  <h6><p>Dede Kurniawan, S.Pd - 083831142583</p></h6>
+			  <br>
+			  <h4><p>Gmail:</p><h4>
+			  <h6><p>masjidbaiturrohman.ctr@gmail.com</p></h6>
+            </li>
+          </ul>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
